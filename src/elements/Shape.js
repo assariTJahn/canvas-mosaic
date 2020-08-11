@@ -21,6 +21,13 @@ export default class Shape {
 
     }
 
+    moveHorizontal(x){
+        this.x += x;
+    }
+    moveVertical(y){
+        this.y += y;
+    }
+
     isInCenterWidth(pos){
         const rect = this.getRect();
         const quarter = rect.width /4 ;

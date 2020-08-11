@@ -102,7 +102,7 @@ export default class DrawingArea {
 
     onMouseUpEvent() {
         this.canvas.addEventListener('mouseup', (e) => {
-            if (this.getCurrentShape()!=null) {
+            if (this.getCurrentShape() != null) {
                 this.getCurrentShape().rotateModeOff();
                 this.getCurrentShape().moveModeOff();
             }
@@ -127,7 +127,7 @@ export default class DrawingArea {
                 this.imageStack.push(shapeObj);
                 this.setCurrentShape(shapeObj);
                 this.getCurrentShape().setFocus();
-                
+
                 this.redraw();
 
             } else {//
@@ -135,7 +135,7 @@ export default class DrawingArea {
                 let targetElement = this.checkClickedArea(pos);//algorithm should be optimized.
                 if (targetElement == null) {//when it chose empty space.
                     console.log('empty space');
-                    if (this.getCurrentShape()!=null) {
+                    if (this.getCurrentShape() != null) {
                         this.getCurrentShape().releaseFocus();
                     }
                     this.setCurrentShape(null);
@@ -144,28 +144,28 @@ export default class DrawingArea {
                     if (this.getCurrentShape() == targetElement) {
                         console.log('same element');
                         //rotation or translate
-                        if(this.getCurrentShape().isInCornerRect(pos)){
+                        if (this.getCurrentShape().isInCornerRect(pos)) {
                             this.getCurrentShape().rotateModeOn();
                         }
-                        if(this.getCurrentShape().isInCenterRect(pos)){
+                        if (this.getCurrentShape().isInCenterRect(pos)) {
                             this.getCurrentShape().moveModeOn();
                         }
                     } else {
                         targetElement.setFocus();
-                        if (this.getCurrentShape()!=null) {
+                        if (this.getCurrentShape() != null) {
                             this.getCurrentShape().releaseFocus();
                         }
                         this.setCurrentShape(targetElement);
-                        
+
                     }
-                    
+
                 }
                 this.redraw();
             }
 
         })
     }
-    
+
     checkClickedArea(mousePosition) {
         const stack = this.imageStack;
         const pos = mousePosition;
@@ -191,7 +191,7 @@ export default class DrawingArea {
         return null;
     }
 
-    setCurrentShape(shapeObj){
+    setCurrentShape(shapeObj) {
         this.currentShape = shapeObj;
     }
 
@@ -206,18 +206,18 @@ export default class DrawingArea {
 
 
             if (this.imageRegistry.currentEntry != null) {//기본조건
-                
+
                 this.redraw();
                 this.drawMouseCursor()
-                
-            }else{
-                    if (this.getCurrentShape()!=null && this.getCurrentShape().isRotateMode()) {
-                        this.getCurrentShape().rotateShape(pos);
-                    }
-                    if (this.getCurrentShape()!=null && this.getCurrentShape().isMoveMode()) {
-                        this.getCurrentShape().move(pos);
-                    }
-                    this.redraw();
+
+            } else {
+                if (this.getCurrentShape() != null && this.getCurrentShape().isRotateMode()) {
+                    this.getCurrentShape().rotateShape(pos);
+                }
+                if (this.getCurrentShape() != null && this.getCurrentShape().isMoveMode()) {
+                    this.getCurrentShape().move(pos);
+                }
+                this.redraw();
             }
 
 
@@ -226,27 +226,64 @@ export default class DrawingArea {
         })
 
     }
-    removeCurrentShape(){
-        this.imageStack = this.imageStack.filter((value,index,arr)=>{
+    removeCurrentShape() {
+        this.imageStack = this.imageStack.filter((value, index, arr) => {
             return value != this.getCurrentShape()
         });
     }
 
-    onKeyDownEvent(){
-        window.addEventListener('keydown',(e)=>{
+    onKeyDownEvent() {
+        const container = document.getElementsByClassName('container')[0];
+        window.addEventListener('keydown', (e) => {
             e.preventDefault();
+
+
             console.log(e.keyCode);
             switch (e.keyCode) {
-                case 8:
-                    //delete
+            
+                case 8://delete key
                     this.removeCurrentShape();
                     break;
-            
+
+                case 37:case 38:case 39:case 40://arrow keys
+                    this.moveShapeObj(e);
+                    break;
+
                 default:
                     break;
             }
             this.redraw();
         })
+    }
+    moveShapeObj(e) {
+        const currentShape = this.getCurrentShape();
+        if (currentShape == null) {
+            return;
+        }
+        switch (e.keyCode) {
+            case 37:
+                //left
+                currentShape.moveHorizontal(-1);
+
+                break;
+            case 38:
+                //up
+                currentShape.moveVertical(-1);
+
+                break;
+            case 39:
+                //right
+                currentShape.moveHorizontal(1);
+                break;
+            case 40:
+                //down
+                currentShape.moveVertical(1);
+
+                break;
+
+            default:
+                break;
+        }
     }
     drawMouseCursor() {
         this.mouseCursor.draw();

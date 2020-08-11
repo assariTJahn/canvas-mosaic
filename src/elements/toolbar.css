@@ -1,0 +1,19 @@
+/* HIDE RADIO */
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* IMAGE STYLES */
+  [type=radio] + img {
+    cursor: pointer;
+  }
+  
+  /* CHECKED STYLES */
+  [type=radio]:checked + img {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 1px;
+    box-shadow: 0 0 1pt 2pt #929292;
+  }

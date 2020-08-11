@@ -1,0 +1,14 @@
+.container {
+  border: solid #6ac5ac 2px;
+}
+nav {
+  border: solid #d64078 2px;
+  float: left;
+  width: 25%;
+}
+
+section {
+  border: solid #fdc72f 2px;
+  width: 75%;
+  margin-left: 25%;
+}

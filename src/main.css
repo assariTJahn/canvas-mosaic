@@ -1,3 +1,6 @@
+html, body {
+    overflow: hidden;
+}
 .container {
   border: solid #6ac5ac 2px;
 }

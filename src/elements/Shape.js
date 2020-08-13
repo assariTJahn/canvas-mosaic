@@ -87,6 +87,9 @@ export default class Shape {
         }
     }
 
+    setAngle(value){
+        this.angle += value;
+    }
 
     setImage(img) {
         this.img = img;
@@ -96,13 +99,14 @@ export default class Shape {
         return this.img;
     }
     increaseAngle() {
-        this.angle += 5;
+        this.setAngle(5);
+        
         if (this.angle > 360) {
             this.angle = 0;
         }
     }
     decreaseAngle() {
-        this.angle -= 5;
+        this.setAngle(-5);
         if (this.angle < 0) {
             this.angle = 360;
         }

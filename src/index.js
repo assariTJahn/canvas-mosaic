@@ -1,6 +1,7 @@
 import DrawingArea from './DrawingArea';
 import ToolBar from './elements/ToolBar';
 import ImageRegistry from './elements/ImageRegistry';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
 function component(){
@@ -16,13 +17,13 @@ function component(){
 
 
     const imageRegistry = new ImageRegistry();
-    const canvas = new DrawingArea(400,400, imageRegistry);
+    const canvas = new DrawingArea(800,400, imageRegistry);
     const toolBar = new ToolBar(imageRegistry);
     const p = document.createElement('p');
     p.innerHTML = 'DEMO MOSAIC';
     header.appendChild(p);
 
-    drawingArea. appendChild(canvas.getCanvas());
+    drawingArea. appendChild(canvas.getContainer());
     toolBarArea.appendChild(toolBar.getToolBarArea());
     nav.appendChild(toolBarArea);
 

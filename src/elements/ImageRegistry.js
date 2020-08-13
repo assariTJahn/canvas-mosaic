@@ -1,4 +1,3 @@
-import Shape from './Shape';
 import heartRed from '../images/heart_red.png';
 import heartBlue from '../images/heart_skyblue.png';
 import heartYellow from '../images/heart_orange.png';

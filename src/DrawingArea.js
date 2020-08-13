@@ -1,5 +1,6 @@
 import ShapeObject from './elements/Shape';
 import MouseCursor from './elements/MouseCursor';
+import './drawingArea.css'
 export default class DrawingArea {
     constructor(width, height, imageRegistry) {
         this.container = document.createElement('div');

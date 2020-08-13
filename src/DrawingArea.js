@@ -45,30 +45,30 @@ export default class DrawingArea {
         this.fillBackground();
         this.drawGrid();
         this.initEventListener();
-        this.preventScrolling();
+        // this.preventScrolling();
     }
 
-    preventScrolling(){
-        document.body.addEventListener("touchstart", (e)=> {
+    preventScrolling() {
+        document.body.addEventListener("touchstart", (e) => {
             console.log('touch');
             if (e.target == this.canvas) {
-              e.preventDefault();
+                e.preventDefault();
             }
-          }, false);
-          document.body.addEventListener("touchend",  (e)=> {
+        }, false);
+        document.body.addEventListener("touchend", (e) => {
             console.log('touch');
-            
+
             if (e.target == this.canvas) {
-              e.preventDefault();
+                e.preventDefault();
             }
-          }, false);
-          document.body.addEventListener("touchmove",  (e)=> {
+        }, false);
+        document.body.addEventListener("touchmove", (e) => {
             console.log('touch');
-            
+
             if (e.target == this.canvas) {
-              e.preventDefault();
+                e.preventDefault();
             }
-          }, false);
+        }, false);
     }
 
     setCurrentTile(tile) {
@@ -122,7 +122,7 @@ export default class DrawingArea {
         }
     }
 
-    getContainer(){
+    getContainer() {
         return this.container;
     }
 
@@ -136,12 +136,29 @@ export default class DrawingArea {
 
 
     initEventListener() {
+        //keyboard & mouse
         this.onMouseMoveEvent();
         this.onMouseDownEvent();
         this.onMouseUpEvent();
         this.onKeyDownEvent();
 
-       
+        //mobile environment
+        this.onTouchStart();
+        this.onTouchEnd();
+        this.onTouchDrag();
+
+    }
+
+    onTouchDrag(e) {
+        this.canvas.addEventListener('touchmove',(e)=>{
+            this.moveEvent(e);
+        })
+    }
+
+    onTouchEnd() {
+        this.canvas.addEventListener('touchend', (e) => {
+            this.endEvent(e);
+        })
     }
 
     endEvent(e) {
@@ -159,12 +176,13 @@ export default class DrawingArea {
 
     onTouchStart() {
         this.canvas.addEventListener('touchstart', (e) => {
-            this.endEvent(e);
+            this.startEvent(e);
         })
     }
 
     startEvent(e) {
-        e.preventDefault();
+        // e.preventDefault();
+        console.log('start');
         const pos = this.mouseCursor.getMousePosition(e);
         const entry = this.imageRegistry.currentEntry;//get chosen image from the registry.
 
@@ -193,10 +211,12 @@ export default class DrawingArea {
                 this.setCurrentShape(null);
 
             } else {//when it clicked on current shape element or other shape element.
+                e.preventDefault();
                 if (this.getCurrentShape() == targetElement) {
                     console.log('same element');
                     //rotation or translate
-                    if (this.getCurrentShape().isInCornerRect(pos)) {
+
+                    if (e.touches.length > 1||this.getCurrentShape().isInCornerRect(pos)) {
                         this.getCurrentShape().rotateModeOn();
                     }
                     if (this.getCurrentShape().isInCenterRect(pos)) {
@@ -260,26 +280,37 @@ export default class DrawingArea {
         return this.currentShape;
     }
 
-    onMouseMoveEvent() {
-        this.canvas.addEventListener('mousemove', (e) => {
-            this.mouseCursor.updateMousePosition(e);
-            let pos = this.mouseCursor.getMousePosition(e);
+    moveEvent(e) {
+        this.mouseCursor.updateMousePosition(e);
+        let pos = this.mouseCursor.getMousePosition(e);
 
 
-            if (this.imageRegistry.currentEntry != null) {//기본조건
+        if (this.imageRegistry.currentEntry != null) {//default status
 
-                this.redraw();
-                this.drawMouseCursor()
+            this.redraw();
+            this.drawMouseCursor()
 
-            } else {
-                if (this.getCurrentShape() != null && this.getCurrentShape().isRotateMode()) {
-                    this.getCurrentShape().rotateShape(pos);
-                }
-                if (this.getCurrentShape() != null && this.getCurrentShape().isMoveMode()) {
-                    this.getCurrentShape().move(pos);
-                }
-                this.redraw();
+        } else {
+            if (this.getCurrentShape() != null && this.getCurrentShape().isRotateMode()) {
+                this.getCurrentShape().rotateShape(pos);
             }
+            if (this.getCurrentShape() != null && this.getCurrentShape().isMoveMode()) {
+                this.getCurrentShape().move(pos);
+            }
+            if (this.getCurrentShape() == null) {
+                console.log('scroll');
+            }
+            this.redraw();
+        }
+    }
+
+
+
+    onMouseMoveEvent() {
+
+
+        this.canvas.addEventListener('mousemove', (e) => {
+            this.moveEvent(e);
 
 
 

@@ -19,8 +19,8 @@ export default class MouseCursor {
     getMousePosition(e) {
         const rect = this.canvas.getBoundingClientRect();
         return {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
+            x: (e.clientX || e.touches[0].clientX ) - rect.left,
+            y: (e.clientY || e.touches[0].clientY ) - rect.top
         }
     }
 

@@ -172,8 +172,20 @@ export default class Shape {
         return false;
     }
     isInCornerRect(pos) {
+        // const x = pos.x;
+        // const y = pos.y;
+        // const halfHeight = this.img.height/2;
+        // const halfWidth = this.img.width/2;
+        // const r = Math.sqrt(Math.pow(pos.x - (this.x + halfWidth) ,2) + Math.pow(pos.y - (this.y + halfHeight),2));
         
-        return this.checkXinCorner(pos) && this.checkYinCorner(pos);
+        // let rotatedX = r * Math.cos(Math.PI * (this.angle - 45) /180) + this.x + halfWidth;  
+        // let rotatedY = -1 * r * Math.sin(Math.PI * (this.angle - 45) /180) + this.y + halfHeight;//for it is canvas' coordinate system
+        // console.log(rotatedX, rotatedY);
+        // const p = {
+        //     x: Math.round(rotatedX),
+        //     y: Math.round(rotatedY)
+        // }
+        return this.checkXinCorner(pos) && this.checkYinCorner(p);
     }
 
     drawBox() {
@@ -192,22 +204,21 @@ export default class Shape {
     draw() {
         const halfWidth = this.img.width / 2;
         const halfHeight = this.img.height / 2;
-        const offset = halfWidth / 2;
         //console.log(this.x,this.y);
         this.ctx.save();
         this.ctx.beginPath();
         this.ctx.translate(this.x + halfWidth, this.y + halfHeight);
         this.ctx.rotate(-(Math.PI / 180 * this.angle));
         this.ctx.translate(-(this.x + halfWidth), -(this.y + halfHeight));
+        this.ctx.drawImage(this.img, this.x, this.y);
         if (this.isFocused) {
             this.drawBox();
         }
-        this.ctx.drawImage(this.img, this.x, this.y);
-        //this.ctx.arc(this.x+radius,this.y+radius,radius,0,Math.PI, true);
-        //this.ctx.rotate(-(Math.PI/180*this.angle));
         this.ctx.closePath();
-        this.ctx.stroke();
         this.ctx.restore();
+
+        this.ctx.stroke();
+
     }
 
     setFocus() {
@@ -227,12 +238,7 @@ export default class Shape {
         this.angle = angle + 45;
 
         ctx.save();
-        // ctx.fillStyle = 'rgba(255,255,255,0)';
-        // ctx.fillRect(this.x, this.y, 10, 10);
-
-        // ctx.clip();
-        // ctx.clearRect(this.x,this.y, 50, 50);
-        // this.draw();
+      
         ctx.restore();
     }
 }

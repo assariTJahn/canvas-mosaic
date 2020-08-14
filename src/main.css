@@ -17,24 +17,43 @@ section {
 }
 
 .controller-container {
-    border: solid black 2px;
-    
+  border: solid black 2px;
 }
 
 .output-container {
-    border: solid red 1px;
-    display: table-cell;
-    vertical-align: middle;
-    padding: 10px;
+  border: solid red 1px;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
 }
 
-.button, .output{
-    border: solid black 1px;
-    border-radius: 4px;
-    vertical-align: middle;
+.button,
+.output {
+  border: solid black 1px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.output {
+    width : 38px;
+}
+
+.button {
+  width: 38px;
+  height: 38px;
 }
 
 .button:active {
-    /* border: solid red 1px; */
-    box-shadow: inset 0 0 4pt 1pt #929292;
+  /* border: solid red 1px; */
+  box-shadow: inset 0 0 4pt 1pt #929292;
+}
+
+#btn-anticlock {
+  background: url("./elements/baseline_rotate_left_black_18dp.png");
+}
+#btn-clockwise {
+  background: url("./elements/baseline_rotate_right_black_18dp.png");
+}
+#btn-delete {
+  background: url("./elements/baseline_close_black_18dp.png");
 }

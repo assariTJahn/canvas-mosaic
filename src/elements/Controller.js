@@ -13,17 +13,20 @@ export default class Controller{
         this.angle.style.height='36px';
 
         this.antiClock = document.createElement('input');
-        this.antiClock.type = 'image';
-        this.antiClock.src =  rotate_left;
+        this.antiClock.type = 'button';
+        this.antiClock.id = 'btn-anticlock';
+        this.antiClock.style.background =  rotate_left;
         this.antiClock.classList.add('button');
 
         this.clockWise = document.createElement('input');
-        this.clockWise.type = 'image';
+        this.clockWise.type = 'button';
+        this.clockWise.id = 'btn-clockwise';
         this.clockWise.src = rotate_right;
         this.clockWise.classList.add('button');
 
         this.delete = document.createElement('input');
-        this.delete.type = 'image';
+        this.delete.type = 'button';
+        this.delete.id = 'btn-delete';
         this.delete.src = cancel;
         this.delete.classList.add('button');
         

@@ -1,3 +1,7 @@
-.controller_container input {
-    outline: solid 1px black;
+.controller_container {
+    border: solid 1px black;
+}
+
+.controller_container > input[type=image]{
+    border: solid 1px black;
 }

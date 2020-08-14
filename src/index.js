@@ -39,6 +39,7 @@ function component(){
     toolBarArea.classList.add('col-sm-4');
     controlArea.classList.add('col-sm-4');
     
+    
     headerSection.appendChild(header);
     mainSection.appendChild(drawingArea);
     

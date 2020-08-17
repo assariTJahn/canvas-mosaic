@@ -185,7 +185,7 @@ export default class Shape {
         //     x: Math.round(rotatedX),
         //     y: Math.round(rotatedY)
         // }
-        return this.checkXinCorner(pos) && this.checkYinCorner(p);
+        return this.checkXinCorner(pos) && this.checkYinCorner(pos);
     }
 
     drawBox() {

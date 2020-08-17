@@ -10,7 +10,17 @@ export default class Controller{
         this.angle = document.createElement('input');
         this.angle.type = 'number';
         this.angle.classList.add('output');
-        this.angle.style.height='36px';
+        this.angle.style.height='38px';
+        this.angle.style.width='45px';
+
+        this.enter = document.createElement('input');
+        this.enter.value = '入力';
+        this.enter.type = 'button';
+        this.enter.id = 'btn-enter';
+        this.enter.style.height='38px';
+        this.enter.style.width='100px';
+        // this.antiClock.style.background =  rotate_left;
+        this.enter.classList.add('button');
 
         this.antiClock = document.createElement('input');
         this.antiClock.type = 'button';
@@ -33,21 +43,63 @@ export default class Controller{
         this.container = document.createElement('div');
         this.container.classList.add('controller-container');
         
-        this.outputContainer.appendChild(this.angle);
-        this.outputContainer.appendChild(this.clockWise);
-        this.outputContainer.appendChild(this.antiClock);
-        this.outputContainer.appendChild(this.delete);
+
+        this.arrElements = [
+            this.angle,
+            this.enter,
+            this.clockWise,
+            this.antiClock,
+            this.delete
+        ]
+
+
+        Array.prototype.forEach.call(this.arrElements, (item)=>{
+            this.outputContainer.appendChild(item)
+        })
+
+        // this.outputContainer.appendChild(this.angle);
+        // this.outputContainer.appendChild(this.enter);
+        // this.outputContainer.appendChild(this.clockWise);
+        // this.outputContainer.appendChild(this.antiClock);
+        // this.outputContainer.appendChild(this.delete);
         
         this.container.appendChild(this.outputContainer);
         
-        // this.container.appendChild(this.clockWise);
-        // this.container.appendChild(this.antiClock);
-        // this.container.appendChild(this.delete);
+        
 
         this.drawingArea = drawingArea;
+        this.initEventHandler();
     }
+
+
 
     getController(){
         return this.container;
     }
+
+    initEventHandler(){
+        this.clockwiseEvent();
+        this.antiClockWiseEvent();
+        this.deleteEvent();
+    }
+
+    clockwiseEvent(){
+        this.clockWise.addEventListener('click',(e)=>{
+            const shape = this.drawingArea.getCurrentShape();
+            shape.setAngle(-5);
+        })
+    }
+
+    antiClockWiseEvent(){
+        this.antiClock.addEventListener('click',(e)=>{
+            const shape = this.drawingArea.getCurrentShape();
+            shape.setAngle(-5)
+        })
+    }
+    deleteEvent(){
+        this.delete.addEventListener('click',(e)=>{
+
+        })
+    }
+
 }

@@ -15,7 +15,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Tile drawing demo'
+            title: 'Tile drawing demo',
+            template: path.resolve(__dirname,'src', 'elements', 'template', 'index.html')
         })
         
 

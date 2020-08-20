@@ -1,58 +1,74 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <%= htmlWebpackPlugin.tags.headTags %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
+
 <body>
     <!-- <%= htmlWebpackPlugin.tags.bodyTags %> -->
     <div id="container">
         <div class="row no-gutters">
             <div class="col-sm-2" id="setting-area">
-                <div class="row no-gutters">
-                    <div class="card">
-                        <div class="card-header">
-                          Background settings
-                        </div>
-                        <div class="card-body">
-                            <div class="background-setting-area">
-                                <input type="number" name="width" id="canvas-width">
-                                <input type="number" name="height" id="canvas-height">
-                                <input type="button" value="生成" id="canvas-create-btn">
+
+
+                <button class="trigger">Show Modal</button>
+
+                <div class="modal-popup hidden">
+                    <div class="container">
+                        <div class="body">
+                            <div class="row no-gutters">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a href="#" id="close-btn">X</a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="background-setting-area">
+                                            <input type="number" name="width" id="canvas-width">
+                                            <input type="number" name="height" id="canvas-height">
+                                            <input type="button" value="生成" id="canvas-create-btn">
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                          
                         </div>
-                      </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-8" id="drawing-area">
+                <div class="canvas-container">
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="control-area"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-8" id="drawing-area"></div>
             <div class="col-sm-2" id="side-bar-area">
                 <div class="row row-cols-1 no-gutters overflow-auto">
                     <div class="card">
                         <div class="card-header">
-                          Tiles
+                            Tiles
                         </div>
                         <div class="card-body">
                             <div id="toolbar-area"></div>
-                          
+
                         </div>
-                      </div>
-                      
-                      <div class="card">
-                        <div class="card-header">
-                          詳細オプション
-                        </div>
-                        
-                                <div class="card-body">
-                                    <div id="control-area"></div>
-                                    
-                                </div>
-                      </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

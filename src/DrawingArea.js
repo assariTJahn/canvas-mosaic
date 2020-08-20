@@ -2,30 +2,17 @@ import ShapeObject from './elements/Shape';
 import MouseCursor from './elements/MouseCursor';
 import './drawingArea.css'
 export default class DrawingArea {
-    constructor(width, height, imageRegistry) {
-        this.container = document.createElement('div');
-        this.container.classList.add('canvas-container');//eventhandling
-        this.canvas = document.createElement('canvas');
-        this.container.appendChild(this.canvas);
-        this.canvas.width = width;
-        this.canvas.height = height;
+    constructor(canvas, imageRegistry) {
+        
+        this.container = document.getElementsByClassName('canvas-container')[0];
+        this.canvas = canvas;
+        // this.container.appendChild(this.canvas);
+        
         this.tilesize = 10;//can be changeable
         this.tile = null;
 
         this.imageRegistry = imageRegistry;
 
-        //request animation frame(we don't need this function yet)
-
-        // window.requestAnimationFrame = (function(callback){
-        //     return window.requestAnimationFrame ||
-        //     window.webkitRequestAnimationFrame ||
-        //     window.mozRequestAnimationFrame ||
-        //     window.oRequestAnimationFrame ||
-        //     window.msRequestAnimationFrame ||
-        //     function (callback){
-        //         window.setTimeout(callback, 1000/60);
-        //     };
-        // })();
 
 
         this.canvas.style.borderStyle = 'solid';
@@ -45,31 +32,10 @@ export default class DrawingArea {
         this.fillBackground();
         this.drawGrid();
         this.initEventListener();
-        // this.preventScrolling();
+
     }
 
-    preventScrolling() {
-        document.body.addEventListener("touchstart", (e) => {
-            console.log('touch');
-            if (e.target == this.canvas) {
-                e.preventDefault();
-            }
-        }, false);
-        document.body.addEventListener("touchend", (e) => {
-            console.log('touch');
-
-            if (e.target == this.canvas) {
-                e.preventDefault();
-            }
-        }, false);
-        document.body.addEventListener("touchmove", (e) => {
-            console.log('touch');
-
-            if (e.target == this.canvas) {
-                e.preventDefault();
-            }
-        }, false);
-    }
+    
 
     setCurrentTile(tile) {
         this.tile = tile;
@@ -216,7 +182,7 @@ export default class DrawingArea {
                     console.log('same element');
                     //rotation or translate
 
-                    if (e.touches.length > 1||this.getCurrentShape().isInCornerRect(pos)) {
+                    if ((e instanceof TouchEvent && e.touches.length > 1)||this.getCurrentShape().isInCornerRect(pos)) {
                         this.getCurrentShape().rotateModeOn();
                     }
                     if (this.getCurrentShape().isInCenterRect(pos)) {

@@ -11,7 +11,7 @@ export default class BackgroundSetting {
             document.getElementById('canvas-create-btn')
         ];
 
-        this.initEventListener();
+        // this.initEventListener();
     }
 
     initEventListener(){
@@ -25,9 +25,9 @@ export default class BackgroundSetting {
 
         btn.addEventListener('click',(e)=>{
 
-            this.width = width.value;
+            this.width  = width.value;
             this.height = height.value;
-            btn.value = 'RESET';
+            btn.value   = 'RESET';
         })
     }
 

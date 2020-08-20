@@ -20,7 +20,7 @@ function component() {
     const imageRegistry     = new ImageRegistry();
     const drawingArea       = new DrawingArea(canvas, imageRegistry);
     const toolBar           = new ToolBar(imageRegistry);
-    const controller        = new Controller(canvas);
+    const controller        = new Controller(drawingArea);
 
 
     // document.getElementById('drawing-area').appendChild(drawingArea.getCanvas());
@@ -31,6 +31,7 @@ function component() {
     
     
     document.getElementById('control-area').appendChild(controller.getController());
+    
     Modal();
 
     

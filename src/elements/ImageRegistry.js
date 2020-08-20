@@ -2,13 +2,23 @@ import heartRed from '../images/heart_red.png';
 import heartBlue from '../images/heart_skyblue.png';
 import heartYellow from '../images/heart_orange.png';
 import heartPurple from '../images/heart_green.png';
+import squareDark from '../images/square_tile_darkblue.png';
+import leafSkyblue from '../images/leaf_skyblue.png';
+import leafVermilion from '../images/leaf_vermilion.png';
+import cloverWhite from '../images/clover_white.png';
+import cloverYellow from '../images/clover_yellow.png';
 export default class ImageRegistry {
     constructor() {
         this.imageList = [
             heartRed,
             heartBlue,
             heartYellow,
-            heartPurple
+            heartPurple,
+            squareDark,
+            leafSkyblue,
+            leafVermilion,
+            cloverWhite,
+            cloverYellow
         ];
         this.assets = [];
         this.subscriber = [];

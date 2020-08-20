@@ -57,12 +57,8 @@ export default class Controller{
             this.outputContainer.appendChild(item)
         })
 
-        // this.outputContainer.appendChild(this.angle);
-        // this.outputContainer.appendChild(this.enter);
-        // this.outputContainer.appendChild(this.clockWise);
-        // this.outputContainer.appendChild(this.antiClock);
-        // this.outputContainer.appendChild(this.delete);
-        
+       
+     
         this.container.appendChild(this.outputContainer);
         
         
@@ -85,19 +81,25 @@ export default class Controller{
 
     clockwiseEvent(){
         this.clockWise.addEventListener('click',(e)=>{
+            console.log('clockwise')
             const shape = this.drawingArea.getCurrentShape();
             shape.setAngle(-5);
+            this.drawingArea.redraw();
         })
     }
 
     antiClockWiseEvent(){
         this.antiClock.addEventListener('click',(e)=>{
+            console.log('anticlockwise')
             const shape = this.drawingArea.getCurrentShape();
-            shape.setAngle(-5)
+            shape.setAngle(5)
+            this.drawingArea.redraw();
         })
     }
     deleteEvent(){
         this.delete.addEventListener('click',(e)=>{
+            let isDeleted = this.drawingArea.removeCurrentShape();
+            this.drawingArea.redraw();
 
         })
     }

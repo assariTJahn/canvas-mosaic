@@ -6,7 +6,6 @@ export default class DrawingArea {
         
         this.container = document.getElementsByClassName('canvas-container')[0];
         this.canvas = canvas;
-        // this.container.appendChild(this.canvas);
         
         this.tilesize = 10;//can be changeable
         this.tile = null;
@@ -116,13 +115,13 @@ export default class DrawingArea {
     }
 
     onTouchDrag(e) {
-        this.canvas.addEventListener('touchmove',(e)=>{
+        this.getContainer().addEventListener('touchmove',(e)=>{
             this.moveEvent(e);
         })
     }
 
     onTouchEnd() {
-        this.canvas.addEventListener('touchend', (e) => {
+        this.getContainer().addEventListener('touchend', (e) => {
             this.endEvent(e);
         })
     }
@@ -135,24 +134,23 @@ export default class DrawingArea {
     }
 
     onMouseUpEvent() {
-        this.canvas.addEventListener('mouseup', (e) => {
+        this.getContainer().addEventListener('mouseup', (e) => {
             this.endEvent(e);
         })
     }
 
     onTouchStart() {
-        this.canvas.addEventListener('touchstart', (e) => {
+        this.getContainer().addEventListener('touchstart', (e) => {
             this.startEvent(e);
         })
     }
 
     startEvent(e) {
-        // e.preventDefault();
-        console.log('start');
         const pos = this.mouseCursor.getMousePosition(e);
         const entry = this.imageRegistry.currentEntry;//get chosen image from the registry.
 
         if (entry != null) {
+            //create new Shape Object
             if (this.getCurrentShape() != null) {//set new shape element
                 this.getCurrentShape().releaseFocus();//blur
             }
@@ -202,13 +200,13 @@ export default class DrawingArea {
         }
     }
     onMouseDownEvent() {
-        this.canvas.addEventListener('mousedown', (e) => {
+        this.container.addEventListener('mousedown', (e) => {
             this.startEvent(e);
         })
     }
 
     onTouchStart() {
-        this.canvas.addEventListener('touchstart', (e) => {
+        this.container.addEventListener('touchstart', (e) => {
             this.startEvent(e)
         })
     }
@@ -285,9 +283,11 @@ export default class DrawingArea {
 
     }
     removeCurrentShape() {
+        const originLeng = this.imageStack.length;
         this.imageStack = this.imageStack.filter((value, index, arr) => {
             return value != this.getCurrentShape()
         });
+        return this.imageStack.length != originLeng;
     }
 
     onKeyDownEvent() {
@@ -309,7 +309,6 @@ export default class DrawingArea {
 
                     } else {
                         this.moveShapeObj(e);
-
                     }
                     break;
 
@@ -331,7 +330,6 @@ export default class DrawingArea {
                 break;
             case 38: case 39://up right
                 currentShape.setAngle(1);
-
                 break;
 
             default:
@@ -347,12 +345,10 @@ export default class DrawingArea {
             case 37:
                 //left
                 currentShape.moveHorizontal(-1);
-
                 break;
             case 38:
                 //up
                 currentShape.moveVertical(-1);
-
                 break;
             case 39:
                 //right
@@ -361,7 +357,6 @@ export default class DrawingArea {
             case 40:
                 //down
                 currentShape.moveVertical(1);
-
                 break;
 
             default:

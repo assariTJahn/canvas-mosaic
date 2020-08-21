@@ -9,6 +9,29 @@
 </head>
 
 <body>
+    <div class="modal-popup hidden">
+        <div class="container">
+            <div class="body">
+                <div class="row no-gutters">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="#" id="close-btn">X</a>
+                        </div>
+                        <div class="card-body">
+                            <div id="control-area"></div>
+
+                            <!-- <div class="background-setting-area">
+                                <input type="number" name="width" id="canvas-width">
+                                <input type="number" name="height" id="canvas-height">
+                                <input type="button" value="生成" id="canvas-create-btn">
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- <%= htmlWebpackPlugin.tags.bodyTags %> -->
     <div id="container">
         <div class="row no-gutters">
@@ -17,27 +40,7 @@
 
                 <button class="trigger">Show Modal</button>
 
-                <div class="modal-popup hidden">
-                    <div class="container">
-                        <div class="body">
-                            <div class="row no-gutters">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <a href="#" id="close-btn">X</a>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="background-setting-area">
-                                            <input type="number" name="width" id="canvas-width">
-                                            <input type="number" name="height" id="canvas-height">
-                                            <input type="button" value="生成" id="canvas-create-btn">
-                                        </div>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
@@ -46,11 +49,11 @@
                 <div class="canvas-container">
                     <canvas id="canvas"></canvas>
                 </div>
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body">
                         <div id="control-area"></div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="col-sm-2" id="side-bar-area">
                 <div class="row row-cols-1 no-gutters overflow-auto">

@@ -3,10 +3,10 @@ import MouseCursor from './elements/MouseCursor';
 import './drawingArea.css'
 export default class DrawingArea {
     constructor(canvas, imageRegistry) {
-        
+
         this.container = document.getElementsByClassName('canvas-container')[0];
         this.canvas = canvas;
-        
+
         this.tilesize = 10;//can be changeable
         this.tile = null;
 
@@ -34,7 +34,7 @@ export default class DrawingArea {
 
     }
 
-    
+
 
     setCurrentTile(tile) {
         this.tile = tile;
@@ -115,7 +115,7 @@ export default class DrawingArea {
     }
 
     onTouchDrag(e) {
-        this.getContainer().addEventListener('touchmove',(e)=>{
+        this.getContainer().addEventListener('touchmove', (e) => {
             this.moveEvent(e);
         })
     }
@@ -139,36 +139,67 @@ export default class DrawingArea {
         })
     }
 
-    onTouchStart() {
-        this.getContainer().addEventListener('touchstart', (e) => {
-            this.startEvent(e);
-        })
+    dealWithNewShapeObject(e, pos, entry) {
+        if (this.getCurrentShape() != null) {//set new shape element
+            this.getCurrentShape().releaseFocus();//blur
+        }
+        this.imageRegistry.releaseCurrentEntry();//release current entry from registry
+        let shapeObj = new ShapeObject(this.getContext(), pos.x, pos.y);//create new shape object for drawing area
+
+        shapeObj.setImage(entry.getImage());
+        this.imageStack.push(shapeObj);
+        this.setCurrentShape(shapeObj);
+        this.getCurrentShape().setFocus();
+
+        this.redraw();
+    }
+
+    doubleTapEvent(e, pos, entry) {
+        const activeTime = 400;
+
+        //double tap
+        this.timeStart = this.timeEnd;
+        this.timeEnd = Date.now();
+        // let timeDiff = this.timeEnd - this.timeStart;
+
+        if (this.timeEnd - this.timeStart < activeTime) {
+            //open modal popup for control panel
+
+
+            document.querySelector(".modal-popup").classList.remove('hidden');
+        }
+    }
+
+    touchEvent() {
+
+    }
+
+    dealWithCurrentShapeObject(e, pos, entry) {
+
+        this.doubleTapEvent(pos, entry);
+
+        if ((e instanceof TouchEvent && e.touches.length > 1) || this.getCurrentShape().isInCornerRect(pos)) {
+            this.getCurrentShape().rotateModeOn();
+        }
+
+        if (this.getCurrentShape().isInCenterRect(pos)) {
+            this.getCurrentShape().moveModeOn();
+        }
     }
 
     startEvent(e) {
         const pos = this.mouseCursor.getMousePosition(e);
-        const entry = this.imageRegistry.currentEntry;//get chosen image from the registry.
+        const entry = this.imageRegistry.getCurrentEntry();//get chosen image from the registry.
 
         if (entry != null) {
             //create new Shape Object
-            if (this.getCurrentShape() != null) {//set new shape element
-                this.getCurrentShape().releaseFocus();//blur
-            }
-            this.imageRegistry.releaseCurrentEntry();//release current entry from registry
-            let shapeObj = new ShapeObject(this.getContext(), pos.x, pos.y);//create new shape object for drawing area
-
-            shapeObj.setImage(entry.getImage());
-            this.imageStack.push(shapeObj);
-            this.setCurrentShape(shapeObj);
-            this.getCurrentShape().setFocus();
-
-            this.redraw();
+            this.dealWithNewShapeObject(e, pos, entry);
 
         } else {//
             //if it clicks on shape element, move focus. if it clicks empty space, release everything.
             let targetElement = this.checkClickedArea(pos);//algorithm should be optimized.
             if (targetElement == null) {//when it chose empty space.
-                console.log('empty space');
+                // console.log('empty space');
                 if (this.getCurrentShape() != null) {
                     this.getCurrentShape().releaseFocus();
                 }
@@ -176,16 +207,12 @@ export default class DrawingArea {
 
             } else {//when it clicked on current shape element or other shape element.
                 e.preventDefault();
-                if (this.getCurrentShape() == targetElement) {
-                    console.log('same element');
-                    //rotation or translate
 
-                    if ((e instanceof TouchEvent && e.touches.length > 1)||this.getCurrentShape().isInCornerRect(pos)) {
-                        this.getCurrentShape().rotateModeOn();
-                    }
-                    if (this.getCurrentShape().isInCenterRect(pos)) {
-                        this.getCurrentShape().moveModeOn();
-                    }
+
+                if (this.getCurrentShape() == targetElement) {
+                    this.dealWithCurrentShapeObject(e, pos, entry);
+
+
                 } else {
                     targetElement.setFocus();
                     if (this.getCurrentShape() != null) {
@@ -207,7 +234,13 @@ export default class DrawingArea {
 
     onTouchStart() {
         this.container.addEventListener('touchstart', (e) => {
+
+
             this.startEvent(e)
+
+
+
+            //single tap
         })
     }
 
@@ -262,7 +295,7 @@ export default class DrawingArea {
                 this.getCurrentShape().move(pos);
             }
             if (this.getCurrentShape() == null) {
-                console.log('scroll');
+                // console.log('scroll');
             }
             this.redraw();
         }
@@ -296,7 +329,7 @@ export default class DrawingArea {
             e.preventDefault();
 
 
-            console.log(e.keyCode);
+            // console.log(e.keyCode);
             switch (e.keyCode) {
 
                 case 8://delete key

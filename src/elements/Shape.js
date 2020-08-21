@@ -50,7 +50,7 @@ export default class Shape {
 
     moveModeOff(){
         this.moveMode=false;
-        console.log('move mode off');
+        // console.log('move mode off');
 
     }
 
@@ -71,7 +71,7 @@ export default class Shape {
 
     rotateModeOff(){
         this.rotateMode = false;
-        console.log('rotate mode off');
+        // console.log('rotate mode off');
     }
 
     rotateModeOn(){

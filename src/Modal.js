@@ -3,12 +3,15 @@ export default function(){
     var container = modal.querySelector(".container");
     var closeBtn = document.getElementById('close-btn');
     document.querySelector(".trigger").addEventListener("click", function (e) {
-      modal.classList.remove("hidden")
+      this.container = container;
+        modal.classList.remove("hidden")
+      console.log('show modal');
     });
     
-    document.querySelector(".modal-popup").addEventListener("click", function (e) {
-      if ( e.target ){
+    closeBtn.addEventListener("click", function (e) {
+    //   if ( e.target ){
           modal.classList.add("hidden");
-      }     
+          console.log('hidden')
+    //   }     
     });
 }

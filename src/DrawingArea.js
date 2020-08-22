@@ -2,7 +2,7 @@ import ShapeObject from './elements/Shape';
 import MouseCursor from './elements/MouseCursor';
 import './drawingArea.css'
 export default class DrawingArea {
-    constructor(canvas, imageRegistry) {
+    constructor(canvas, imageRegistry, modal) {
 
         this.container = document.getElementsByClassName('canvas-container')[0];
         this.canvas = canvas;
@@ -12,6 +12,7 @@ export default class DrawingArea {
 
         this.imageRegistry = imageRegistry;
 
+        this.modal = modal;
 
 
         this.canvas.style.borderStyle = 'solid';
@@ -164,23 +165,26 @@ export default class DrawingArea {
 
         if (this.timeEnd - this.timeStart < activeTime) {
             //open modal popup for control panel
-
-
+            console.log(e);
+            this.modal.setPosition({
+                x: pos.x,
+                y: pos.y
+            })
             document.querySelector(".modal-popup").classList.remove('hidden');
         }
     }
 
-    touchEvent() {
-
+    touchEvent(e, pos, entry) {
+        if ((e instanceof TouchEvent && e.touches.length > 1) || this.getCurrentShape().isInCornerRect(pos)) {
+            this.getCurrentShape().rotateModeOn();
+        }
     }
 
     dealWithCurrentShapeObject(e, pos, entry) {
 
-        this.doubleTapEvent(pos, entry);
-
-        if ((e instanceof TouchEvent && e.touches.length > 1) || this.getCurrentShape().isInCornerRect(pos)) {
-            this.getCurrentShape().rotateModeOn();
-        }
+        this.doubleTapEvent(e, pos, entry);
+        this.touchEvent(e, pos, entry);
+        
 
         if (this.getCurrentShape().isInCenterRect(pos)) {
             this.getCurrentShape().moveModeOn();
